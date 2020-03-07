@@ -17,7 +17,7 @@ declare -A loseCount
 
 function playForMonth()
 {
-	echo "Playing For Month.."
+	echo "Starting Game...For Month.."
 	expectedGoalForMonth=$(($stakesAmount*$monthDays))
 
 	for (( i=1; i<=$monthDays; i++ ))
@@ -35,6 +35,7 @@ function playForMonth()
 		 	fi
 		done
 		totalAmount=$(($totalAmount+$stakesAmount))
+		echo $totalAmount
 	done
 
 		if [[ $totalAmount -lt $expectedGoalForMonth ]]
@@ -45,6 +46,7 @@ function playForMonth()
 		then
 				echo "Gambler Won by $(($totalAmount-$expectedGoalForMonth))$"
 				luckyDay
+				wantToPlay
 		else
 				echo "Gambler Neither Won or Loose Neutral Achieved Goal"
 		fi
@@ -77,5 +79,22 @@ function unluckyDay()
 	done
 	echo "Unlucky Day is $unluckyDay & no. of losings $losings"
 }
+function wantToPlay()
+{
+	stakesAmount=100
+	bet=1
+	playingGoal=150
+	resignLimit=50
+	totalAmount=0
+	monthDays=20
 
+	echo
+	read -p "Do You Want To Start Game Again Y/N" choice
+	if [[ $choice == y || $choice == Y ]]
+	then
+			playForMonth
+	else
+			echo "Okay..Exiting..."
+	fi
+}
 playForMonth

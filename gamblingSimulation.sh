@@ -9,17 +9,24 @@ stakes=100
 bet=1
 playingGoal=150
 resignLimit=50
+totalAmount=0
 
 function play()
 {
-	while [[ $stakes -ge $resignLimit && $stakes -lt $playingGoal ]]
+	for (( i=1; i<=20; i++ ))
 	do
-		if [[ $((RANDOM%2)) -eq 1 ]]
-		then
-			stakes=$(($stakes+$bet))
-		else
-			stakes=$(($stakes-$bet))
-		fi
+		stakes=100
+		while [[ $stakes -gt $resignLimit && $stakes -lt $playingGoal ]]
+		do
+			if [[ $((RANDOM%2)) -eq 1 ]]
+			then
+				stakes=$(($stakes+$bet))
+			else
+				stakes=$(($stakes-$bet))
+			fi
+		done
+		totalAmount=$(($totalAmount+$stakes))
 	done
+	echo $totalAmount
 }
 play
